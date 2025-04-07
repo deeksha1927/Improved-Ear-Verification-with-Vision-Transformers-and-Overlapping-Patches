@@ -1,0 +1,14 @@
+#!/bin/bash
+#$ -M darun@nd.edu      # Email address for job notification
+#$ -m ae               # Send mail when job begins, ends and aborts
+#$ -q gpu@@cvrl-1080ti
+#$ -l gpu_card=4
+#$ -pe smp 24
+#$ -N VIT-L_dp005_mask_0_200_1000_100_112x112      # Specify job name
+#$ -o /afs/crc.nd.edu/user/d/darun/insightface/recognition/arcface_torch/logs/    # stdout
+
+
+module load conda
+
+conda activate insightface
+torchrun --nproc_per_node=4 train_v2.py configs/wf42m_pfc03_40epoch_64gpu_vit_l
